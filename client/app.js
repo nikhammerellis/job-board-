@@ -1,0 +1,1 @@
+var job_board = angular.module('job_board', []);
