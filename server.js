@@ -1,19 +1,16 @@
-require('./config/mongoose');
-var express = require('express'),
-	morgan = require('morgan'),
-	bodyParser = require('body-parser');
+process.env.NODE_ENV = process.env.NODE_ENV || "development";
 
+var mongoose = require('./config/mongoose'),
+	express = require('./config/express');
+
+var db = mongoose(); 
+	
 var app = express();
-require('./config/routes/jobs.server.routes.js')(app);
-
-app.use(morgan('dev'));
-
-app.use(bodyParser.json());
-
-app.use(express.static(__dirname+'/client'));
 
 var port = 8000;
 
 app.listen(port, function(){
 	console.log("*******LISTENING ON "+port+"*******");
 });
+
+module.exports = app;

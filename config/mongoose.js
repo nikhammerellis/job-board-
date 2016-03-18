@@ -1,12 +1,14 @@
-var mongoose = require('mongoose');
-var fs = require('fs');
-//connect to DB
-mongoose.connect('mongodb://localhost/job-board');
-//specify the path to all the models 
-var models_path = __dirname + '/../server/models';
+var config = require('./config'),
+	mongoose = require('mongoose');
 
-fs.readdirSync(models_path).forEach(function(file){
-	if(file.indexOf('.js') > 0) {
-		require(models_path + '/' + file);
-	}
-});
+// Define the Mongoose configuration method 
+module.exports = function() {
+	// Use Mongoose to connect to MongoDB
+	var db = mongoose.connect(config.db);
+
+	// Load the application models 
+	require('../server/models/jobs.server.model');
+	
+	// Return the Mongoose connection instance 
+	return db;
+};
